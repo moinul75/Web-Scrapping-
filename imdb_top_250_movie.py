@@ -25,21 +25,37 @@ try:
             # print(movie_title)
     #for release data
     realeases = soup.find_all('span', class_ ='sc-c7e5f54-8 hgjcbi cli-title-metadata-item')
-    for rel in realeases: 
-        rel_year = re.search(r'\b\d{4}\b',rel.text)
+    for rel in realeases:
+        rel_year = re.search(r'\b\d{4}\b', rel.text)
         durations = re.findall(r'\b\d{1,2}h \d{1,2}m\b', rel.text)
-        rate = re.findall(r'\b[\w-]\b',rel.text)
-        print(rate)
-        #print(durations)
-        if durations: 
-            for length in durations: 
-                movie_length = length
-               # print(movie_length)
-        if rel_year: 
-            release_year = rel_year.group()
-            # print(rel_year) 
+        ratings = re.findall(r'\b(?:PG-13|R|G|Not Rated|18\+|Approved)\b', rel.text, re.IGNORECASE)
+        for rating in ratings:
+            rating_movie = rating
 
+        if durations:
+            for length in durations:
+                movie_length = length
+
+        if rel_year:
+            release_year = rel_year.group()
+    vote_count = soup.find_all('span',class_='ipc-rating-star--voteCount')
+    for vote in vote_count:
+        vote_text = vote.get_text(strip=True)
+        vote_text = vote_text.replace("(", "").replace(")", "")
+        #print(vote_text)
+
+    rating_spans = soup.find_all('span', class_='ipc-rating-star--imdb')
+
+    if rating_spans:
+        for rate_span in rating_spans:
+            rates = rate_span.get_text(strip=True)
+            r = re.search(r'([\d.]+)',rates)
+            rate = r.group(1)
+           # print(rate)
     
+    #now store this on a ecel file 
+
+        
 
    
 except Exception as e: 

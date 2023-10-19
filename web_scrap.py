@@ -8,14 +8,11 @@ url = "https://webscraper.io/test-sites/e-commerce/allinone/computers/tablets"
 r = requests.get(url)
 soup = BeautifulSoup(r.text, "lxml")
 
-
 #collections in a list 
 names = []
 descriptions = []
 prices = []
 reviews = []
-
-
 #names 
 titles = soup.find_all("a",class_ = "title")
 # print(len(titles))
@@ -23,12 +20,10 @@ for title in titles:
     #print(title.text)
     names.append(title.text)
 
-
 #descriptions 
 desc = soup.find_all("p",class_="description card-text")
 descriptions = [results.text for results in desc]
 # print(descriptions)
-
 #price 
 price = soup.find_all("h4",class_ ="float-end price card-title pull-right")
 prices = [prc.text for prc in price]
@@ -54,4 +49,5 @@ print(df.head())
 
 #csv file 
 df.to_csv('price_list.csv',index=False)
+
 
