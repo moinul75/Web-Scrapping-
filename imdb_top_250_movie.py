@@ -36,7 +36,6 @@ try:
             movies_names_data.append(movie_title)
 
     #for release data
-    realeases = soup.find_all('div', class_ ='sc-c7e5f54-7 brlapf cli-title-metadata')
     releases = soup.find_all('div', class_='sc-c7e5f54-7 brlapf cli-title-metadata')
     length = len(releases)
     # print("Number of elements in releases:", length)
@@ -61,27 +60,6 @@ try:
             # print("Grade:", grade)
         else:
             print("The HTML structure has changed or is not as expected.")
-    # for rel in realeases:
-    #     rel_year = re.search(r'\b\d{4}\b', rel.text)
-    #     durations = re.findall(r'\b(?:\d+h\s*)?\d+m\b', rel.text)
-    #     ratings = re.findall(r'\b(?:PG-13|R|G|Not Rated|Approved|Passed|16\+|18\+)\b', rel.text)
-    #     if ratings:
-    #         for rating in ratings:
-    #             rating_movie = rating
-    #             movie_rate_grade.append(rating_movie)
-
-    #     if durations:
-    #         for length in durations:
-    #             movie_length = length
-    #             movie_duration_data.append(movie_length)
-    #             # Filling in "N/A" for missing ratings
-
-  
-
-    
-    #     if rel_year:
-    #         release_year = rel_year.group()
-    #         movie_release_data.append(release_year)
 
     vote_count = soup.find_all('span',class_='ipc-rating-star--voteCount')
     for vote in vote_count:
@@ -126,7 +104,7 @@ try:
     df = pd.DataFrame(data, columns=['Name', 'Duration', 'Release_Date', 'Rating', 'Grade', 'Vote'])
 
     # Save the DataFrame to an Excel file
-    df.to_excel('imdb_top_250_movie.xlsx', header=False, index=False)
+    df.to_excel('imdb_top_250_movie.xlsx', index=False)
 
    
 except Exception as e: 
